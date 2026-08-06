@@ -8,6 +8,16 @@ import { JwtModule } from '@nestjs/jwt';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { jwtAccessConfig } from 'src/config/jwt.config';
 import { UsersModule } from 'src/users/users.module';
+import { CookieProvider } from './providers/cookie.provider';
+import { GenerateTokenProvider } from './providers/generateToken.provider';
+import { HashProvider } from './providers/hash.provider';
+import { LoginProvider } from './providers/login.provider';
+import { RefreshTokenProvider } from './providers/refreshToken.provider';
+import { RegisterProvider } from './providers/register.provider';
+import { ValidateJwtProvider } from './providers/validateJwt.provider';
+import { ValidateLocalProvider } from './providers/validateLocal.privider';
+import { ValidateRefreshJwtProvider } from './providers/validateRefreshJwt.provider';
+import { WhiteListProvider } from './providers/whiteList.provider';
 
 @Module({
   imports: [
@@ -21,6 +31,18 @@ import { UsersModule } from 'src/users/users.module';
     TypeOrmModule.forFeature([UserEntity]),
   ],
   controllers: [AuthController],
-  providers: [AuthService],
+  providers: [
+    AuthService,
+    CookieProvider,
+    GenerateTokenProvider,
+    HashProvider,
+    LoginProvider,
+    RefreshTokenProvider,
+    RegisterProvider,
+    ValidateJwtProvider,
+    ValidateLocalProvider,
+    ValidateRefreshJwtProvider,
+    WhiteListProvider,
+  ],
 })
 export class AuthModule {}

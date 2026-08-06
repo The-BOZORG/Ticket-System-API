@@ -4,10 +4,11 @@ import {
   RequestTimeoutException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { UserEntity } from 'src/users/entities/user.entity';
+import { UserEntity, UserRole } from 'src/users/entities/user.entity';
 import { Repository } from 'typeorm';
 import { HashProvider } from './hash.provider';
 import { RegisterDto } from '../dto/register.dto';
+import { WhiteListProvider } from './whiteList.provider';
 
 @Injectable()
 export class RegisterProvider {
@@ -16,6 +17,8 @@ export class RegisterProvider {
     private readonly userRepository: Repository<UserEntity>,
 
     private readonly hashProvider: HashProvider,
+
+    private readonly whiteListProvider: WhiteListProvider,
   ) {}
 
   public async register(dto: RegisterDto): Promise<UserEntity> {
@@ -25,6 +28,10 @@ export class RegisterProvider {
       },
     });
 
+    const role = this.whiteListProvider.isAdmin(dto.email)
+      ? UserRole.ADMIN
+      : UserRole.USER;
+
     if (existUser) throw new ConflictException('user already exists.');
 
     const hashPassword = await this.hashProvider.hash(dto.password);
@@ -32,6 +39,7 @@ export class RegisterProvider {
     const user = this.userRepository.create({
       ...dto,
       password: hashPassword,
+      role,
     });
 
     try {

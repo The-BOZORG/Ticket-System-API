@@ -11,16 +11,29 @@ export class GenerateTokenProvider {
     private readonly configService: ConfigService,
   ) {}
 
-  public async generateTokens(payload: JwtPayload): Promise<GeneratedTokens> {
+  public async generateTokens(user: JwtPayload): Promise<GeneratedTokens> {
     const [accessToken, refreshToken] = await Promise.all([
-      this.jwtService.signAsync(payload, {
-        secret: this.configService.getOrThrow('JWT_ACCESS_TOKEN'),
-        expiresIn: this.configService.getOrThrow('JWT_ACCESS_TOKEN_TTL'),
-      }),
-      this.jwtService.signAsync(payload, {
-        secret: this.configService.getOrThrow('JWT_REFRESH_TOKEN'),
-        expiresIn: this.configService.getOrThrow('JWT_REFRESH_TOKEN_TTL'),
-      }),
+      this.jwtService.signAsync(
+        {
+          id: user.id,
+          type: 'access',
+        },
+        {
+          secret: this.configService.getOrThrow('JWT_ACCESS_TOKEN'),
+          expiresIn: this.configService.getOrThrow('JWT_ACCESS_TOKEN_TTL'),
+        },
+      ),
+
+      this.jwtService.signAsync(
+        {
+          id: user.id,
+          type: 'refresh',
+        },
+        {
+          secret: this.configService.getOrThrow('JWT_REFRESH_TOKEN'),
+          expiresIn: this.configService.getOrThrow('JWT_REFRESH_TOKEN_TTL'),
+        },
+      ),
     ]);
 
     return {
