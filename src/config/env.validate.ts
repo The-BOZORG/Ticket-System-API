@@ -6,4 +6,8 @@ export default Joi.object({
   DATABASE_PASSWORD: Joi.string().required(),
   DATABASE_HOST: Joi.string().required(),
   DATABASE_NAME: Joi.string().required(),
+  JWT_ACCESS_TOKEN: Joi.string().required(),
+  JWT_REFRESH_TOKEN: Joi.string().required(),
+  JWT_ACCESS_TOKEN_TTL: Joi.number().required(),
+  JWT_REFRESH_TOKEN_TTL: Joi.number().required(),
 });
