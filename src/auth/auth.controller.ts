@@ -14,7 +14,6 @@ import { LocalAuthGuard } from './guards/local.guard';
 import { JwtRefreshGuard } from './guards/refresh.guard';
 import { CurrentUser } from './decorators/currentUser.decorator';
 import { UserEntity } from 'src/users/entities/user.entity';
-import { JwtAuthGuard } from './guards/jwt.guard';
 
 @Controller('auth')
 export class AuthController {
@@ -37,10 +36,9 @@ export class AuthController {
   }
 
   @Post('refresh')
-  @UseGuards(JwtAuthGuard)
+  @UseGuards(JwtRefreshGuard)
   @HttpCode(HttpStatus.OK)
   public async refreshToken(
-    //@Req() req,
     @CurrentUser() user: UserEntity,
     @Res({ passthrough: true }) response: Response,
   ) {
