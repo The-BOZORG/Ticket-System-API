@@ -16,7 +16,8 @@ import { UserEntity } from './entities/user.entity';
 import { UpdateDto } from './dto/update.dto';
 import { ChangePasswordDto } from './dto/updatePassword.dto';
 import { PaginationDto } from './dto/pagination.dto';
-
+import { Paginate } from 'nestjs-paginate';
+import type { PaginateQuery } from 'nestjs-paginate';
 @Controller('users')
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
@@ -25,6 +26,12 @@ export class UsersController {
   @HttpCode(HttpStatus.OK)
   public getUsers(@Query() dto: PaginationDto) {
     return this.usersService.getUser(dto);
+  }
+
+  @Get('pagination')
+  @HttpCode(HttpStatus.OK)
+  public pagination(@Paginate() query: PaginateQuery) {
+    return this.usersService.pagination(query);
   }
 
   @Patch('update')

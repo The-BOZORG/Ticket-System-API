@@ -7,6 +7,8 @@ import { UserEntity } from './entities/user.entity';
 import { ChangePasswordDto } from './dto/updatePassword.dto';
 import { GetUsers } from './providers/getUsers.provider';
 import { PaginationDto } from './dto/pagination.dto';
+import { GetAllUsersPagination } from './providers/getUsersPagination.provider';
+import { Paginated, PaginateQuery } from 'nestjs-paginate';
 
 @Injectable()
 export class UsersService {
@@ -15,10 +17,17 @@ export class UsersService {
     private readonly updatePassword: UpdatePassword,
     private readonly deleteUser: DeleteUser,
     private readonly getUsers: GetUsers,
+    private readonly getAllUsersPagination: GetAllUsersPagination,
   ) {}
 
   public getUser(dto: PaginationDto) {
     return this.getUsers.getAllUser(dto);
+  }
+
+  public async pagination(
+    query: PaginateQuery,
+  ): Promise<Paginated<UserEntity>> {
+    return this.getAllUsersPagination.getAllUsersPagination(query);
   }
 
   public update(dto: UpdateDto, userId: string): Promise<UserEntity> {
