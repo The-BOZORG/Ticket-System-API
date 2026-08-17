@@ -9,6 +9,7 @@ import { AuthModule } from 'src/auth/auth.module';
 import { UpdateUser } from './providers/updateUser.provider';
 import { UpdatePassword } from './providers/updatePasswprd.provider';
 import { DeleteUser } from './providers/deleteUser.provider';
+import { GetUsers } from './providers/getUsers.provider';
 
 @Module({
   imports: [
@@ -23,6 +24,7 @@ import { DeleteUser } from './providers/deleteUser.provider';
     UpdateUser,
     UpdatePassword,
     DeleteUser,
+    GetUsers,
   ],
   exports: [FindUserByEmailProvider],
 })

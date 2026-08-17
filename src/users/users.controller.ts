@@ -2,9 +2,11 @@ import {
   Body,
   Controller,
   Delete,
+  Get,
   HttpCode,
   HttpStatus,
   Patch,
+  Query,
   UseGuards,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
@@ -13,10 +15,17 @@ import { CurrentUser } from 'src/auth/decorators/currentUser.decorator';
 import { UserEntity } from './entities/user.entity';
 import { UpdateDto } from './dto/update.dto';
 import { ChangePasswordDto } from './dto/updatePassword.dto';
+import { PaginationDto } from './dto/pagination.dto';
 
 @Controller('users')
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
+
+  @Get('users')
+  @HttpCode(HttpStatus.OK)
+  public getUsers(@Query() dto: PaginationDto) {
+    return this.usersService.getUser(dto);
+  }
 
   @Patch('update')
   @UseGuards(JwtAuthGuard)
