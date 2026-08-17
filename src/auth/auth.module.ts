@@ -18,6 +18,9 @@ import { ValidateJwtProvider } from './providers/validateJwt.provider';
 import { ValidateLocalProvider } from './providers/validateLocal.privider';
 import { ValidateRefreshJwtProvider } from './providers/validateRefreshJwt.provider';
 import { WhiteListProvider } from './providers/whiteList.provider';
+import { LocalStrategy } from './strategies/local.strategy';
+import { JwtStrategy } from './strategies/jwt.strategy';
+import { JwtRefreshStrategy } from './strategies/jwtRefresh.strategy';
 
 @Module({
   imports: [
@@ -43,6 +46,9 @@ import { WhiteListProvider } from './providers/whiteList.provider';
     ValidateLocalProvider,
     ValidateRefreshJwtProvider,
     WhiteListProvider,
+    LocalStrategy,
+    JwtStrategy,
+    JwtRefreshStrategy,
   ],
 })
 export class AuthModule {}

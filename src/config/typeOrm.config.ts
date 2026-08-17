@@ -11,5 +11,7 @@ export async function typeOrmConfig(
     username: configService.getOrThrow<string>('DATABASE_USER'),
     password: configService.getOrThrow<string>('DATABASE_PASSWORD'),
     database: configService.getOrThrow<string>('DATABASE_NAME'),
+    autoLoadEntities: true,
+    synchronize: false,
   };
 }

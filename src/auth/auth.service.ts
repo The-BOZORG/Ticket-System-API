@@ -6,6 +6,8 @@ import { RegisterDto } from './dto/register.dto';
 import { UserEntity } from 'src/users/entities/user.entity';
 import { Response } from 'express';
 import { CookieProvider } from './providers/cookie.provider';
+import { ValidateJwtProvider } from './providers/validateJwt.provider';
+import { ValidateLocalProvider } from './providers/validateLocal.privider';
 
 @Injectable()
 export class AuthService {
@@ -14,6 +16,8 @@ export class AuthService {
     private readonly loginProvider: LoginProvider,
     private readonly refreshTokenProvider: RefreshTokenProvider,
     private readonly cookieProvider: CookieProvider,
+    private readonly validateLocalProvider: ValidateLocalProvider,
+    private readonly validateJwtProvider: ValidateJwtProvider,
   ) {}
 
   public async register(dto: RegisterDto) {
@@ -26,6 +30,17 @@ export class AuthService {
 
   public async refreshToken(user: UserEntity, response: Response) {
     return this.refreshTokenProvider.refreshToken(user, response);
+  }
+
+  public async validateUser(
+    email: string,
+    password: string,
+  ): Promise<UserEntity> {
+    return await this.validateLocalProvider.validate({ email, password });
+  }
+
+  public async validate(id: string): Promise<UserEntity> {
+    return await this.validateJwtProvider.validate({ id });
   }
 
   public logout(response: Response) {

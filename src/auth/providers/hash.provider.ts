@@ -6,7 +6,7 @@ export class HashProvider {
   private readonly saltRound = 10;
 
   public async hash(data: string): Promise<string> {
-    return await bcrypt.hash(data.this.saltRound);
+    return await bcrypt.hash(data, this.saltRound);
   }
 
   public async compare(
