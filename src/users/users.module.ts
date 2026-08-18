@@ -28,6 +28,6 @@ import { GetAllUsersPagination } from './providers/getUsersPagination.provider';
     GetUsers,
     GetAllUsersPagination,
   ],
-  exports: [FindUserByEmailProvider],
+  exports: [FindUserByEmailProvider, FindUserById],
 })
 export class UsersModule {}

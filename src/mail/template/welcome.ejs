@@ -1,3 +1,198 @@
-<a href="{{verificationUrl}}">
-  Verify your email
-</a>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Verify your email</title>
+</head>
+
+<body style="
+  margin: 0;
+  padding: 0;
+  background-color: #f4f6f8;
+  font-family: Arial, Helvetica, sans-serif;
+  color: #1f2937;
+">
+
+  <div style="
+    max-width: 600px;
+    margin: 40px auto;
+    padding: 0 20px;
+  ">
+
+    <!-- Main Card -->
+    <div style="
+      background-color: #ffffff;
+      border-radius: 16px;
+      padding: 40px;
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+    ">
+
+      <!-- Logo / Brand -->
+      <div style="
+        text-align: center;
+        margin-bottom: 30px;
+      ">
+        <div style="
+          display: inline-block;
+          background-color: #111827;
+          color: #ffffff;
+          padding: 10px 18px;
+          border-radius: 10px;
+          font-size: 20px;
+          font-weight: bold;
+        ">
+          Ticket-System
+        </div>
+      </div>
+
+      <!-- Icon -->
+      <div style="
+        text-align: center;
+        font-size: 48px;
+        margin-bottom: 15px;
+      ">
+        ✉️
+      </div>
+
+      <!-- Title -->
+      <h1 style="
+        margin: 0 0 15px;
+        text-align: center;
+        font-size: 28px;
+        color: #111827;
+      ">
+        Welcome, <%= name %>!
+      </h1>
+
+      <!-- Description -->
+      <p style="
+        margin: 0 auto 25px;
+        max-width: 450px;
+        text-align: center;
+        font-size: 16px;
+        line-height: 1.7;
+        color: #6b7280;
+      ">
+        Thanks for creating your Ticket-System account.
+        Please verify your email address to activate your account
+        and start using the platform.
+      </p>
+
+      <!-- Verify Button -->
+      <div style="
+        text-align: center;
+        margin: 30px 0;
+      ">
+        <a href="<%= verificationUrl %>" style="
+            display: inline-block;
+            padding: 14px 30px;
+            background-color: #111827;
+            color: #ffffff;
+            text-decoration: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: bold;
+          ">
+          Verify My Email
+        </a>
+      </div>
+
+      <!-- Account Info -->
+      <div style="
+        margin-top: 30px;
+        padding: 20px;
+        background-color: #f9fafb;
+        border-radius: 10px;
+      ">
+        <p style="
+          margin: 0 0 8px;
+          font-size: 14px;
+          color: #6b7280;
+        ">
+          Account email
+        </p>
+
+        <p style="
+          margin: 0;
+          font-size: 15px;
+          font-weight: bold;
+          color: #111827;
+        ">
+          <%= email %>
+        </p>
+      </div>
+
+      <!-- Alternative Link -->
+      <p style="
+        margin: 30px 0 8px;
+        font-size: 13px;
+        color: #9ca3af;
+      ">
+        If the button above doesn't work, copy and paste this link into
+        your browser:
+      </p>
+
+      <p style="
+        margin: 0;
+        font-size: 12px;
+        line-height: 1.6;
+        word-break: break-all;
+      ">
+        <a href="<%= verificationUrl %>" style="
+            color: #4b5563;
+            text-decoration: underline;
+          ">
+          <%= verificationUrl %>
+        </a>
+      </p>
+
+      <!-- Expiration Notice -->
+      <div style="
+        margin-top: 25px;
+        padding: 12px 15px;
+        background-color: #fff7ed;
+        border-radius: 8px;
+      ">
+        <p style="
+          margin: 0;
+          font-size: 13px;
+          color: #9a3412;
+          text-align: center;
+        ">
+          This verification link will expire in 15 minutes.
+        </p>
+      </div>
+
+    </div>
+
+    <!-- Footer -->
+    <div style="
+      text-align: center;
+      padding: 25px 10px;
+    ">
+      <p style="
+        margin: 0 0 8px;
+        font-size: 13px;
+        color: #9ca3af;
+      ">
+        You received this email because an account was created
+        on Ticket-System.
+      </p>
+
+      <p style="
+        margin: 0;
+        font-size: 12px;
+        color: #d1d5db;
+      ">
+        © <%= new Date().getFullYear() %> Ticket-System. All rights reserved.
+      </p>
+    </div>
+
+  </div>
+
+</body>
+
+</html>

@@ -1,3 +1,4 @@
+import { IsOptional } from 'class-validator';
 import { UserEntity } from '../../users/entities/user.entity';
 import {
   Column,
@@ -22,7 +23,8 @@ export class TicketEntity {
   title: string;
 
   @Column({ type: 'text' })
-  description: string;
+  @IsOptional()
+  description?: string;
 
   @Column({
     default: 'OPEN',
