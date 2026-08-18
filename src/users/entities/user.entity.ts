@@ -1,8 +1,10 @@
 import { Exclude } from 'class-transformer';
+import { TicketEntity } from 'src/ticket/entities/ticket.entity';
 import {
   Column,
   CreateDateColumn,
   Entity,
+  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
@@ -49,6 +51,9 @@ export class UserEntity {
     default: false,
   })
   isVerified: boolean;
+
+  @OneToMany(() => TicketEntity, (ticket) => ticket.user)
+  tickets: TicketEntity[];
 
   @CreateDateColumn({
     name: 'created_at',
