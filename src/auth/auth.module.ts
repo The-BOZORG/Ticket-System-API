@@ -21,6 +21,8 @@ import { WhiteListProvider } from './providers/whiteList.provider';
 import { LocalStrategy } from './strategies/local.strategy';
 import { JwtStrategy } from './strategies/jwt.strategy';
 import { JwtRefreshStrategy } from './strategies/jwtRefresh.strategy';
+import { GenerateEmailToken } from './providers/generateEmailToken.provider';
+import { VerifyEmailProvider } from './providers/verifyEmailToken';
 
 @Module({
   imports: [
@@ -49,6 +51,8 @@ import { JwtRefreshStrategy } from './strategies/jwtRefresh.strategy';
     LocalStrategy,
     JwtStrategy,
     JwtRefreshStrategy,
+    GenerateEmailToken,
+    VerifyEmailProvider,
   ],
 
   exports: [HashProvider],

@@ -6,7 +6,10 @@ import { UserEntity } from 'src/users/entities/user.entity';
 export class MailService {
   constructor(private readonly mailerService: MailerService) {}
 
-  public async sendUserWelcome(user: UserEntity): Promise<void> {
+  public async sendUserWelcome(
+    user: UserEntity,
+    verificationToken: string,
+  ): Promise<void> {
     await this.mailerService.sendMail({
       to: user.email,
       from: 'support team <support@demomailtrap.com>',
@@ -15,7 +18,7 @@ export class MailService {
       context: {
         name: user.username,
         email: user.email,
-        loginUrl: 'http://localhost:3000',
+        verificationUrl: `http://localhost:3000/auth/verify-email?token=${verificationToken}`,
       },
     });
   }

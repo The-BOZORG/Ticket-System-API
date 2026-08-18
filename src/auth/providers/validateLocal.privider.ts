@@ -23,6 +23,9 @@ export class ValidateLocalProvider {
 
     if (!passwordMath) throw new UnauthorizedException('wrong password');
 
+    if (!user.isVerified)
+      throw new UnauthorizedException('please verify your email first');
+
     return user;
   }
 }

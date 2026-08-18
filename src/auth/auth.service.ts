@@ -8,6 +8,7 @@ import { Response } from 'express';
 import { CookieProvider } from './providers/cookie.provider';
 import { ValidateJwtProvider } from './providers/validateJwt.provider';
 import { ValidateLocalProvider } from './providers/validateLocal.privider';
+import { VerifyEmailProvider } from './providers/verifyEmailToken';
 
 @Injectable()
 export class AuthService {
@@ -18,10 +19,15 @@ export class AuthService {
     private readonly cookieProvider: CookieProvider,
     private readonly validateLocalProvider: ValidateLocalProvider,
     private readonly validateJwtProvider: ValidateJwtProvider,
+    private readonly verifyEmailProvider: VerifyEmailProvider,
   ) {}
 
   public async register(dto: RegisterDto) {
     return await this.registerProvider.register(dto);
+  }
+
+  public async verifyEmail(token: string): Promise<void> {
+    return await this.verifyEmailProvider.verify(token);
   }
 
   public async login(user: UserEntity, response: Response) {
