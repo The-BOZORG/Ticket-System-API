@@ -43,7 +43,12 @@ export class UsersController {
   @UseGuards(JwtAuthGuard)
   @HttpCode(HttpStatus.OK)
   public update(@Body() dto: UpdateDto, @CurrentUser() user: UserEntity) {
-    return this.usersService.update(dto, user.id);
+    const result = this.usersService.update(dto, user.id);
+
+    return {
+      message: 'user updated successfully',
+      data: result,
+    };
   }
 
   @Patch('updatePass')
@@ -53,13 +58,21 @@ export class UsersController {
     @Body() dto: ChangePasswordDto,
     @CurrentUser() user: UserEntity,
   ) {
-    return this.usersService.updatePass(dto, user.id);
+    this.usersService.updatePass(dto, user.id);
+
+    return {
+      message: 'password changed successfully',
+    };
   }
 
   @Delete('delete')
   @UseGuards(JwtAuthGuard)
   @HttpCode(HttpStatus.OK)
   public delete(@CurrentUser() user: UserEntity) {
-    return this.usersService.delete(user.id);
+    this.usersService.delete(user.id);
+
+    return {
+      message: 'User deleted successfully',
+    };
   }
 }
