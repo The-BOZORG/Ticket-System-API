@@ -13,5 +13,5 @@ export default new DataSource({
   logging: true,
 
   entities: ['src/**/*.entity.ts'],
-  migrations: ['src/migrations/*.ts'],
+  migrations: ['src/database/migrations/*.ts'],
 });

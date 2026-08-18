@@ -1,4 +1,4 @@
-import { UserEntity } from 'src/users/entities/user.entity';
+import { UserEntity } from '../../users/entities/user.entity';
 import {
   Column,
   CreateDateColumn,
@@ -7,13 +7,14 @@ import {
   PrimaryGeneratedColumn,
 } from 'typeorm';
 
-@Entity()
+@Entity({ name: 'tickets' })
 export class TicketEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
   @Column({
     unique: true,
+    nullable: false,
   })
   ticketNumber: string;
 

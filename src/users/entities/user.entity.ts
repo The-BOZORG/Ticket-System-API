@@ -1,5 +1,5 @@
 import { Exclude } from 'class-transformer';
-import { TicketEntity } from 'src/ticket/entities/ticket.entity';
+import { TicketEntity } from '../../ticket/entities/ticket.entity';
 import {
   Column,
   CreateDateColumn,
