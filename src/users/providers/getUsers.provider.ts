@@ -11,7 +11,10 @@ export class GetUsers {
     private readonly userRepository: Repository<UserEntity>,
   ) {}
 
-  public async getAllUser(dto: PaginationDto) {
+  public async getAllUser(dto: PaginationDto): Promise<{
+    data: UserEntity[];
+    count: number;
+  }> {
     const { limit = 10, offset = 0 } = dto;
 
     const [users, total] = await this.userRepository.findAndCount({
