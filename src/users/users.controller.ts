@@ -11,15 +11,15 @@ import {
 } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { JwtAuthGuard } from 'src/auth/guards/jwt.guard';
-import { CurrentUser } from 'src/auth/decorators/currentUser.decorator';
+import { CurrentUser } from 'src/common/decorators/currentUser.decorator';
 import { UserEntity, UserRole } from './entities/user.entity';
 import { UpdateDto } from './dto/update.dto';
 import { ChangePasswordDto } from './dto/updatePassword.dto';
 import { PaginationDto } from './dto/pagination.dto';
 import { Paginate } from 'nestjs-paginate';
 import type { PaginateQuery } from 'nestjs-paginate';
-import { Roles } from './decorators/role.decorator';
-import { RolesGuard } from './guards/role.guard';
+import { Roles } from '../common/decorators/role.decorator';
+import { RolesGuard } from '../common/guards/role.guard';
 @Controller('user')
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}

@@ -12,7 +12,7 @@ import {
 import { TicketService } from './ticket.service';
 import { JwtAuthGuard } from 'src/auth/guards/jwt.guard';
 import { CreateDto } from './dto/create.dto';
-import { CurrentUser } from 'src/auth/decorators/currentUser.decorator';
+import { CurrentUser } from 'src/common/decorators/currentUser.decorator';
 import { UserEntity } from 'src/users/entities/user.entity';
 import { Paginate } from 'nestjs-paginate';
 import type { PaginateQuery } from 'nestjs-paginate';
@@ -35,7 +35,7 @@ export class TicketController {
     return this.ticketService.getAll(query);
   }
 
-  @Get('my/:id')
+  @Get(':id')
   @HttpCode(HttpStatus.OK)
   @UseGuards(JwtAuthGuard)
   public async myTicket(
@@ -45,7 +45,7 @@ export class TicketController {
     return this.ticketService.getMyTicket(ticketId, user.id);
   }
 
-  @Delete('my/:id')
+  @Delete(':id')
   @HttpCode(HttpStatus.OK)
   @UseGuards(JwtAuthGuard)
   public async deleteTicket(

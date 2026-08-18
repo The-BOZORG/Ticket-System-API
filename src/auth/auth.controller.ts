@@ -14,7 +14,7 @@ import { RegisterDto } from './dto/register.dto';
 import type { Response } from 'express';
 import { LocalAuthGuard } from './guards/local.guard';
 import { JwtRefreshGuard } from './guards/refresh.guard';
-import { CurrentUser } from './decorators/currentUser.decorator';
+import { CurrentUser } from '../common/decorators/currentUser.decorator';
 import { UserEntity } from 'src/users/entities/user.entity';
 
 @Controller('auth')

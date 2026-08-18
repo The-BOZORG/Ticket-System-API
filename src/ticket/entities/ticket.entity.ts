@@ -36,7 +36,9 @@ export class TicketEntity {
   })
   priority: string;
 
-  @ManyToOne(() => UserEntity, (user) => user.tickets)
+  @ManyToOne(() => UserEntity, (user) => user.tickets, {
+    onDelete: 'CASCADE',
+  })
   user: UserEntity;
 
   @CreateDateColumn()
