@@ -16,6 +16,7 @@ export class GetAllUsersPagination {
     query: PaginateQuery,
   ): Promise<Paginated<UserEntity>> {
     return paginate(query, this.userRepository, {
+      select: ['id', 'email', 'username', 'role'],
       sortableColumns: ['id', 'createdAt'],
       searchableColumns: ['email', 'username'],
       defaultSortBy: [['createdAt', 'DESC']],

@@ -37,6 +37,8 @@ export class UpdatePassword {
       }
 
       user.password = await this.hashProvider.hash(dto.newPassword);
+
+      await this.userRepository.save(user);
     } catch (error) {
       if (error instanceof UnauthorizedException) {
         throw error;

@@ -20,7 +20,7 @@ export class FindUserByEmailProvider {
     try {
       user = await this.userRepository.findOneBy({ email });
     } catch (error) {
-      throw new RequestTimeoutException('Database request failed.');
+      throw new RequestTimeoutException('Database request failed', error);
     }
 
     if (!user) {

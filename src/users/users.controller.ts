@@ -12,29 +12,34 @@ import {
 import { UsersService } from './users.service';
 import { JwtAuthGuard } from 'src/auth/guards/jwt.guard';
 import { CurrentUser } from 'src/auth/decorators/currentUser.decorator';
-import { UserEntity } from './entities/user.entity';
+import { UserEntity, UserRole } from './entities/user.entity';
 import { UpdateDto } from './dto/update.dto';
 import { ChangePasswordDto } from './dto/updatePassword.dto';
 import { PaginationDto } from './dto/pagination.dto';
 import { Paginate } from 'nestjs-paginate';
 import type { PaginateQuery } from 'nestjs-paginate';
-@Controller('users')
+import { Roles } from './decorators/role.decorator';
+import { RolesGuard } from './guards/role.guard';
+@Controller('user')
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
-  @Get('users')
+  @Get('users') // http://localhost:3000/user/users?limit=2&offset=1
+  @Roles(UserRole.ADMIN)
+  @UseGuards(JwtAuthGuard, RolesGuard)
   @HttpCode(HttpStatus.OK)
   public getUsers(@Query() dto: PaginationDto) {
     return this.usersService.getUser(dto);
   }
 
   @Get('pagination')
+  @UseGuards(JwtAuthGuard)
   @HttpCode(HttpStatus.OK)
   public pagination(@Paginate() query: PaginateQuery) {
     return this.usersService.pagination(query);
   }
 
-  @Patch('update')
+  @Patch('update') // http://localhost:3000/user/update
   @UseGuards(JwtAuthGuard)
   @HttpCode(HttpStatus.OK)
   public update(@Body() dto: UpdateDto, @CurrentUser() user: UserEntity) {
