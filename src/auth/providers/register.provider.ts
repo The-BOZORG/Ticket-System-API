@@ -9,6 +9,7 @@ import { Repository } from 'typeorm';
 import { HashProvider } from './hash.provider';
 import { RegisterDto } from '../dto/register.dto';
 import { WhiteListProvider } from './whiteList.provider';
+import { MailService } from 'src/mail/mail.service';
 
 @Injectable()
 export class RegisterProvider {
@@ -19,6 +20,8 @@ export class RegisterProvider {
     private readonly hashProvider: HashProvider,
 
     private readonly whiteListProvider: WhiteListProvider,
+
+    private readonly mailService: MailService,
   ) {}
 
   public async register(dto: RegisterDto): Promise<UserEntity> {
@@ -43,8 +46,13 @@ export class RegisterProvider {
     });
 
     try {
-      return await this.userRepository.save(user);
+      const savedUser = await this.userRepository.save(user);
+
+      await this.mailService.sendUserWelcome(savedUser);
+
+      return savedUser;
     } catch (error) {
+      console.log(error);
       throw new RequestTimeoutException('could not save user.');
     }
   }
