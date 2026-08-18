@@ -1,41 +1,33 @@
-import { Injectable, RequestTimeoutException } from '@nestjs/common';
+import { Paginated, PaginateQuery, paginate } from 'nestjs-paginate';
+
+import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { TicketEntity } from '../entities/ticket.entity';
 import { Repository } from 'typeorm';
-import { PaginationDto } from '../dto/pagination.dto';
+
+import { TicketEntity } from '../entities/ticket.entity';
 
 @Injectable()
-export class GetAllTicketsProvider {
+export class GetAllTicketsPagination {
   constructor(
     @InjectRepository(TicketEntity)
     private readonly ticketRepository: Repository<TicketEntity>,
   ) {}
 
-  public async getAllTickets(
-    userId: string,
-    dto: PaginationDto,
-  ): Promise<{
-    data: TicketEntity[];
-    count: number;
-  }> {
-    const { limit = 10, offset = 0 } = dto;
-
-    const [tickets, total] = await this.ticketRepository.findAndCount({
-      where: {
-        user: {
-          id: userId,
-        },
-      },
-      take: limit,
-      skip: offset,
-      order: {
-        createdAt: 'DESC',
-      },
+  public async getAllTicketsPagination(
+    query: PaginateQuery,
+  ): Promise<Paginated<TicketEntity>> {
+    return paginate(query, this.ticketRepository, {
+      select: [
+        'id',
+        'ticketNumber',
+        'title',
+        'status',
+        'priority',
+        'createdAt',
+      ],
+      sortableColumns: ['id', 'createdAt', 'priority', 'status'],
+      searchableColumns: ['ticketNumber', 'title', 'description'],
+      defaultSortBy: [['createdAt', 'DESC']],
     });
-
-    return {
-      data: tickets,
-      count: total,
-    };
   }
 }

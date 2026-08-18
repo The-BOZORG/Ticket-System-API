@@ -4,20 +4,18 @@ import {
   RequestTimeoutException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { TicketEntity } from '../entities/ticket.entity';
 import { Repository } from 'typeorm';
 
+import { TicketEntity } from '../entities/ticket.entity';
+
 @Injectable()
-export class GetTicketProvider {
+export class DeleteTicketProvider {
   constructor(
     @InjectRepository(TicketEntity)
     private readonly ticketRepository: Repository<TicketEntity>,
   ) {}
 
-  public async getTicket(
-    ticketId: number,
-    userId: string,
-  ): Promise<TicketEntity> {
+  public async deleteTicket(ticketId: number, userId: string): Promise<void> {
     try {
       const ticket = await this.ticketRepository.findOne({
         where: {
@@ -26,22 +24,19 @@ export class GetTicketProvider {
             id: userId,
           },
         },
-        relations: {
-          user: true,
-        },
       });
 
       if (!ticket) {
         throw new NotFoundException('ticket not found');
       }
 
-      return ticket;
+      await this.ticketRepository.remove(ticket);
     } catch (error) {
       if (error instanceof NotFoundException) {
         throw error;
       }
 
-      throw new RequestTimeoutException('failed to find ticket');
+      throw new RequestTimeoutException('database request failed');
     }
   }
 }
