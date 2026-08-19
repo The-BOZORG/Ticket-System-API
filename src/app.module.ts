@@ -10,6 +10,8 @@ import { MailModule } from './mail/mail.module';
 import { TicketModule } from './ticket/ticket.module';
 import { CinemaModule } from './cinema/cinema.module';
 import { HealthModule } from './health/health.module';
+import { MovieModule } from './movie/movie.module';
+import { ScreeningModule } from './screening/screening.module';
 
 @Module({
   imports: [
@@ -28,6 +30,8 @@ import { HealthModule } from './health/health.module';
     TicketModule,
     CinemaModule,
     HealthModule,
+    MovieModule,
+    ScreeningModule,
   ],
   controllers: [],
   providers: [],

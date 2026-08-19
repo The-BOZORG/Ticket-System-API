@@ -21,7 +21,7 @@ import { JwtAuthGuard } from 'src/auth/guards/jwt.guard';
 export class HallController {
   constructor(private readonly hallService: HallService) {}
 
-  @Post(':cinemaId')
+  @Post('create/:cinemaId')
   @HttpCode(HttpStatus.CREATED)
   public async create(
     @Param('cinemaId') cinemaId: number,

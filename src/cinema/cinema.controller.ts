@@ -21,13 +21,13 @@ import { CreateCinemaDto } from './dto/createCinema.dto';
 export class CinemaController {
   constructor(private readonly cinemaService: CinemaService) {}
 
-  @Post()
+  @Post('create')
   @HttpCode(HttpStatus.CREATED)
   public async create(@Body() dto: CreateCinemaDto): Promise<CinemaEntity> {
     return this.cinemaService.create(dto);
   }
 
-  @Get()
+  @Get('getAll')
   @HttpCode(HttpStatus.OK)
   public async getAll(): Promise<CinemaEntity[]> {
     return this.cinemaService.getAll();

@@ -21,10 +21,11 @@ import { SeatService } from './seat.service';
 import { CreateSeatsProvider } from './providers/seat.providers/createSeat.provider';
 import { FindSeatByIdProvider } from './providers/seat.providers/findSeatByid.provider';
 import { GetSeatsByHallProvider } from './providers/seat.providers/getSeatByHull.provider';
+import { SeatController } from './seat.controller';
 
 @Module({
   imports: [TypeOrmModule.forFeature([CinemaEntity, HallEntity, SeatEntity])],
-  controllers: [CinemaController, HallController],
+  controllers: [CinemaController, HallController, SeatController],
   providers: [
     CinemaService,
     HallService,
