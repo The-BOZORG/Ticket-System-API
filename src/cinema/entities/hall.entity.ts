@@ -19,11 +19,6 @@ export class HallEntity {
   })
   name: string;
 
-  @Column({
-    type: 'int',
-  })
-  capacity: number;
-
   @ManyToOne(() => CinemaEntity, (cinema) => cinema.halls, {
     nullable: false,
     onDelete: 'CASCADE',
