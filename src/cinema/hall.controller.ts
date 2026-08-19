@@ -16,7 +16,7 @@ import { HallEntity } from './entities/hall.entity';
 import { UpdateHallDto } from './dto/updateHall.dto';
 import { JwtAuthGuard } from 'src/auth/guards/jwt.guard';
 
-@Controller('halls')
+@Controller('hall')
 @UseGuards(JwtAuthGuard)
 export class HallController {
   constructor(private readonly hallService: HallService) {}

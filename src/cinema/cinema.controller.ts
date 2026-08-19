@@ -16,7 +16,7 @@ import { UpdateCinemaDto } from './dto/updateCinema';
 import { JwtAuthGuard } from 'src/auth/guards/jwt.guard';
 import { CreateCinemaDto } from './dto/createCinema.dto';
 
-@Controller('cinemas')
+@Controller('cinema')
 @UseGuards(JwtAuthGuard)
 export class CinemaController {
   constructor(private readonly cinemaService: CinemaService) {}
