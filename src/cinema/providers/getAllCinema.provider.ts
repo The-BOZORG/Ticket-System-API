@@ -1,8 +1,11 @@
-import { Injectable, RequestTimeoutException } from '@nestjs/common';
+import {
+  HttpException,
+  Injectable,
+  RequestTimeoutException,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { CinemaEntity } from '../entities/cinema.entity';
 import { Repository } from 'typeorm';
-import { CreateCinemaDto } from '../dto/createCinema.dto';
 
 @Injectable()
 export class GetAllCinemasProvider {
@@ -10,18 +13,20 @@ export class GetAllCinemasProvider {
     @InjectRepository(CinemaEntity)
     private readonly cinemaRepository: Repository<CinemaEntity>,
   ) {}
-  public async create(dto: CreateCinemaDto): Promise<CinemaEntity> {
-    const { name, address } = dto;
 
+  public async getAll(): Promise<CinemaEntity[]> {
     try {
-      const cinema = this.cinemaRepository.create({
-        name,
-        address,
+      return await this.cinemaRepository.find({
+        order: {
+          id: 'DESC',
+        },
       });
-
-      return await this.cinemaRepository.save(cinema);
     } catch (error) {
-      throw new RequestTimeoutException('failed to create cinema', error);
+      if (error instanceof HttpException) {
+        throw error;
+      }
+
+      throw new RequestTimeoutException('Failed to find cinema');
     }
   }
 }
