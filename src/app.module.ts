@@ -8,7 +8,6 @@ import { AuthModule } from './auth/auth.module';
 import { UsersModule } from './users/users.module';
 import { MailModule } from './mail/mail.module';
 import { TicketModule } from './ticket/ticket.module';
-import { CommentModule } from './comment/comment.module';
 import { CinemaModule } from './cinema/cinema.module';
 
 @Module({
@@ -26,7 +25,6 @@ import { CinemaModule } from './cinema/cinema.module';
     UsersModule,
     MailModule,
     TicketModule,
-    CommentModule,
     CinemaModule,
   ],
   controllers: [],

@@ -4,24 +4,24 @@ import {
   RequestTimeoutException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { CinemaEntity } from '../../entities/cinema.entity';
 import { Repository } from 'typeorm';
-import { HallEntity } from '../entities/hall.entity';
-import { FindHallByIdProvider } from './findHallById';
+import { FindCinemaByIdProvider } from './findCinemaById.provider';
 
 @Injectable()
-export class DeleteHallProvider {
+export class DeleteCinemaProvider {
   constructor(
-    @InjectRepository(HallEntity)
-    private readonly cinemaRepository: Repository<HallEntity>,
+    @InjectRepository(CinemaEntity)
+    private readonly cinemaRepository: Repository<CinemaEntity>,
 
-    private readonly findHallById: FindHallByIdProvider,
+    private readonly findCinemaById: FindCinemaByIdProvider,
   ) {}
 
   public async delete(id: number): Promise<void> {
     try {
-      const hall = await this.findHallById.findById(id);
+      const cinema = await this.findCinemaById.findById(id);
 
-      await this.cinemaRepository.remove(hall);
+      await this.cinemaRepository.remove(cinema);
     } catch (error) {
       if (error instanceof HttpException) {
         throw error;

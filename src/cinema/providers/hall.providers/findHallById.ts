@@ -6,7 +6,7 @@ import {
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { HallEntity } from '../entities/hall.entity';
+import { HallEntity } from '../../entities/hall.entity';
 
 @Injectable()
 export class FindHallByIdProvider {

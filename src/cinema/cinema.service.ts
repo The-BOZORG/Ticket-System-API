@@ -1,12 +1,13 @@
 import { Injectable } from '@nestjs/common';
-import { CreateCinemaProvider } from './providers/createCinema.providers';
-import { GetAllCinemasProvider } from './providers/getAllCinema.provider';
-import { FindCinemaByIdProvider } from './providers/findCinemaById.provider';
-import { UpdateCinemaProvider } from './providers/updateCinema.provider';
-import { DeleteCinemaProvider } from './providers/deleteCinama.provider';
+
 import { CinemaEntity } from './entities/cinema.entity';
 import { CreateCinemaDto } from './dto/createCinema.dto';
 import { UpdateCinemaDto } from './dto/updateCinema';
+import { CreateCinemaProvider } from './providers/cinema.providers/createCinema.providers';
+import { GetAllCinemasProvider } from './providers/cinema.providers/getAllCinema.provider';
+import { FindCinemaByIdProvider } from './providers/cinema.providers/findCinemaById.provider';
+import { UpdateCinemaProvider } from './providers/cinema.providers/updateCinema.provider';
+import { DeleteCinemaProvider } from './providers/cinema.providers/deleteCinama.provider';
 
 @Injectable()
 export class CinemaService {

@@ -1,6 +1,6 @@
 import { Injectable, RequestTimeoutException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { HallEntity } from '../entities/hall.entity';
+import { HallEntity } from '../../entities/hall.entity';
 import { Repository } from 'typeorm';
 
 @Injectable()

@@ -1,37 +1,32 @@
 import {
   HttpException,
   Injectable,
-  NotFoundException,
   RequestTimeoutException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { CinemaEntity } from '../entities/cinema.entity';
+import { CinemaEntity } from '../../entities/cinema.entity';
 import { Repository } from 'typeorm';
 
 @Injectable()
-export class FindCinemaByIdProvider {
+export class GetAllCinemasProvider {
   constructor(
     @InjectRepository(CinemaEntity)
     private readonly cinemaRepository: Repository<CinemaEntity>,
   ) {}
 
-  public async findById(id: number): Promise<CinemaEntity> {
+  public async getAll(): Promise<CinemaEntity[]> {
     try {
-      const cinema = await this.cinemaRepository.findOne({
-        where: {
-          id,
+      return await this.cinemaRepository.find({
+        order: {
+          id: 'DESC',
         },
       });
-
-      if (!cinema) throw new NotFoundException('Cinema not found');
-
-      return cinema;
     } catch (error) {
       if (error instanceof HttpException) {
         throw error;
       }
 
-      throw new RequestTimeoutException('failed to find cinema');
+      throw new RequestTimeoutException('Failed to find cinema');
     }
   }
 }

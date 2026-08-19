@@ -4,10 +4,10 @@ import {
   RequestTimeoutException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { CinemaEntity } from '../entities/cinema.entity';
 import { Repository } from 'typeorm';
 import { FindCinemaByIdProvider } from './findCinemaById.provider';
-import { UpdateCinemaDto } from '../dto/updateCinema';
+import { UpdateCinemaDto } from '../../dto/updateCinema';
+import { CinemaEntity } from 'src/cinema/entities/cinema.entity';
 
 @Injectable()
 export class UpdateCinemaProvider {

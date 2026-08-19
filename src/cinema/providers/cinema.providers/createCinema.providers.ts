@@ -4,9 +4,9 @@ import {
   RequestTimeoutException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { CinemaEntity } from '../entities/cinema.entity';
+import { CinemaEntity } from '../../entities/cinema.entity';
 import { Repository } from 'typeorm';
-import { CreateCinemaDto } from '../dto/createCinema.dto';
+import { CreateCinemaDto } from '../../dto/createCinema.dto';
 
 @Injectable()
 export class CreateCinemaProvider {
