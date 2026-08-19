@@ -1,7 +1,14 @@
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  Entity,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+  Unique,
+} from 'typeorm';
 import { HallEntity } from './hall.entity';
 
 @Entity({ name: 'seats' })
+@Unique(['hall', 'row', 'number'])
 export class SeatEntity {
   @PrimaryGeneratedColumn()
   id: number;
@@ -9,11 +16,13 @@ export class SeatEntity {
   @Column({
     type: 'varchar',
     length: 10,
+    nullable: false,
   })
   row: string;
 
   @Column({
     type: 'int',
+    nullable: false,
   })
   number: number;
 
