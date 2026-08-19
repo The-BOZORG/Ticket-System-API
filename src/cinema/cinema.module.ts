@@ -17,6 +17,10 @@ import { GetAllHallsProvider } from './providers/hall.providers/getAllHalls.prov
 import { FindHallByIdProvider } from './providers/hall.providers/findHallById';
 import { UpdateHallProvider } from './providers/hall.providers/updateHull.provider';
 import { DeleteHallProvider } from './providers/hall.providers/deleteHall.provider';
+import { SeatService } from './seat.service';
+import { CreateSeatsProvider } from './providers/seat.providers/createSeat.provider';
+import { FindSeatByIdProvider } from './providers/seat.providers/findSeatByid.provider';
+import { GetSeatsByHallProvider } from './providers/seat.providers/getSeatByHull.provider';
 
 @Module({
   imports: [TypeOrmModule.forFeature([CinemaEntity, HallEntity, SeatEntity])],
@@ -24,6 +28,7 @@ import { DeleteHallProvider } from './providers/hall.providers/deleteHall.provid
   providers: [
     CinemaService,
     HallService,
+    SeatService,
     CreateCinemaProvider,
     GetAllCinemasProvider,
     FindCinemaByIdProvider,
@@ -34,6 +39,9 @@ import { DeleteHallProvider } from './providers/hall.providers/deleteHall.provid
     FindHallByIdProvider,
     UpdateHallProvider,
     DeleteHallProvider,
+    CreateSeatsProvider,
+    FindSeatByIdProvider,
+    GetSeatsByHallProvider,
   ],
 })
 export class CinemaModule {}
