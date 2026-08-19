@@ -20,11 +20,11 @@ import { Roles } from 'src/common/decorators/role.decorator';
 import { RolesGuard } from 'src/common/guards/role.guard';
 
 @Controller('ticket')
+@UseGuards(JwtAuthGuard)
 export class TicketController {
   constructor(private readonly ticketService: TicketService) {}
 
   @Post('create')
-  @UseGuards(JwtAuthGuard)
   @HttpCode(HttpStatus.CREATED)
   public createTicket(@Body() dto: CreateDto, @CurrentUser() user: UserEntity) {
     return this.ticketService.create(dto, user.id);
@@ -40,7 +40,6 @@ export class TicketController {
 
   @Get(':id')
   @HttpCode(HttpStatus.OK)
-  @UseGuards(JwtAuthGuard)
   public async myTicket(
     @Param('id') ticketId: number,
     @CurrentUser() user: UserEntity,
@@ -50,7 +49,6 @@ export class TicketController {
 
   @Delete(':id')
   @HttpCode(HttpStatus.OK)
-  @UseGuards(JwtAuthGuard)
   public async deleteTicket(
     @Param('id') ticketId: number,
     @CurrentUser() user: UserEntity,

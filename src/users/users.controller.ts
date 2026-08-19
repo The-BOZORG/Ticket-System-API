@@ -22,11 +22,11 @@ import { Roles } from '../common/decorators/role.decorator';
 import { RolesGuard } from '../common/guards/role.guard';
 
 @Controller('user')
+@UseGuards(JwtAuthGuard)
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
   @Get('me')
-  @UseGuards(JwtAuthGuard)
   @HttpCode(HttpStatus.OK)
   public showMe(@CurrentUser() user: UserEntity) {
     return this.usersService.me(user.id);
@@ -41,14 +41,12 @@ export class UsersController {
   }
 
   @Get('pagination')
-  @UseGuards(JwtAuthGuard)
   @HttpCode(HttpStatus.OK)
   public pagination(@Paginate() query: PaginateQuery) {
     return this.usersService.pagination(query);
   }
 
   @Patch('update') // http://localhost:3000/user/update
-  @UseGuards(JwtAuthGuard)
   @HttpCode(HttpStatus.OK)
   public update(@Body() dto: UpdateDto, @CurrentUser() user: UserEntity) {
     this.usersService.update(dto, user.id);
@@ -59,7 +57,6 @@ export class UsersController {
   }
 
   @Patch('updatePass')
-  @UseGuards(JwtAuthGuard)
   @HttpCode(HttpStatus.OK)
   public updatePass(
     @Body() dto: ChangePasswordDto,
@@ -73,7 +70,6 @@ export class UsersController {
   }
 
   @Delete('delete')
-  @UseGuards(JwtAuthGuard)
   @HttpCode(HttpStatus.OK)
   public delete(@CurrentUser() user: UserEntity) {
     this.usersService.delete(user.id);
