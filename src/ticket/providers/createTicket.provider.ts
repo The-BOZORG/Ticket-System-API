@@ -4,6 +4,7 @@ import { TicketEntity } from '../entities/ticket.entity';
 import { Repository } from 'typeorm';
 import { CreateDto } from '../dto/create.dto';
 import { FindUserById } from 'src/users/providers/findUserById.provider';
+import { nanoid } from 'nanoid';
 
 @Injectable()
 export class CreateTicketProvider {
@@ -21,6 +22,7 @@ export class CreateTicketProvider {
       const user = await this.findById.findById(userId);
 
       const ticket = this.ticketRepository.create({
+        ticketNumber: `TCK-${nanoid(8)}`,
         title,
         description,
         user,
@@ -28,7 +30,7 @@ export class CreateTicketProvider {
 
       return await this.ticketRepository.save(ticket);
     } catch (error) {
-      throw new RequestTimeoutException('Failed to create ticket', error);
+      throw new RequestTimeoutException('failed to create ticket', error);
     }
   }
 }

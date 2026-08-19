@@ -1,4 +1,3 @@
-import { IsOptional } from 'class-validator';
 import { UserEntity } from '../../users/entities/user.entity';
 import {
   Column,
@@ -23,18 +22,7 @@ export class TicketEntity {
   title: string;
 
   @Column({ type: 'text' })
-  @IsOptional()
   description?: string;
-
-  @Column({
-    default: 'OPEN',
-  })
-  status: string;
-
-  @Column({
-    default: 'MEDIUM',
-  })
-  priority: string;
 
   @ManyToOne(() => UserEntity, (user) => user.tickets, {
     onDelete: 'CASCADE',

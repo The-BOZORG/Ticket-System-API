@@ -9,6 +9,7 @@ import { GetUsers } from './providers/getUsers.provider';
 import { PaginationDto } from './dto/pagination.dto';
 import { GetAllUsersPagination } from './providers/getUsersPagination.provider';
 import { Paginated, PaginateQuery } from 'nestjs-paginate';
+import { ShowMeProvider } from './providers/shoMe.provider';
 
 @Injectable()
 export class UsersService {
@@ -18,7 +19,12 @@ export class UsersService {
     private readonly deleteUser: DeleteUser,
     private readonly getUsers: GetUsers,
     private readonly getAllUsersPagination: GetAllUsersPagination,
+    private readonly showMe: ShowMeProvider,
   ) {}
+
+  public me(userId: string) {
+    return this.showMe.showMe(userId);
+  }
 
   public getUser(dto: PaginationDto) {
     return this.getUsers.getAllUser(dto);

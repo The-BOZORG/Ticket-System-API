@@ -25,7 +25,7 @@ export class GetAllTicketsPagination {
         'priority',
         'createdAt',
       ],
-      sortableColumns: ['id', 'createdAt', 'priority', 'status'],
+      sortableColumns: ['id', 'createdAt'],
       searchableColumns: ['ticketNumber', 'title', 'description'],
       defaultSortBy: [['createdAt', 'DESC']],
     });

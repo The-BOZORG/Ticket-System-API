@@ -24,6 +24,13 @@ import { RolesGuard } from '../common/guards/role.guard';
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
+  @Get('me')
+  @UseGuards(JwtAuthGuard)
+  @HttpCode(HttpStatus.OK)
+  public showMe(@CurrentUser() user: UserEntity) {
+    return this.usersService.me(user.id);
+  }
+
   @Get('users') // http://localhost:3000/user/users?limit=2&offset=1
   @Roles(UserRole.ADMIN)
   @UseGuards(JwtAuthGuard, RolesGuard)
@@ -43,11 +50,10 @@ export class UsersController {
   @UseGuards(JwtAuthGuard)
   @HttpCode(HttpStatus.OK)
   public update(@Body() dto: UpdateDto, @CurrentUser() user: UserEntity) {
-    const result = this.usersService.update(dto, user.id);
+    this.usersService.update(dto, user.id);
 
     return {
       message: 'user updated successfully',
-      data: result,
     };
   }
 

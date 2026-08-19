@@ -11,6 +11,7 @@ import { UpdatePassword } from './providers/updatePasswprd.provider';
 import { DeleteUser } from './providers/deleteUser.provider';
 import { GetUsers } from './providers/getUsers.provider';
 import { GetAllUsersPagination } from './providers/getUsersPagination.provider';
+import { ShowMeProvider } from './providers/shoMe.provider';
 
 @Module({
   imports: [
@@ -27,6 +28,7 @@ import { GetAllUsersPagination } from './providers/getUsersPagination.provider';
     DeleteUser,
     GetUsers,
     GetAllUsersPagination,
+    ShowMeProvider,
   ],
   exports: [FindUserByEmailProvider, FindUserById],
 })
