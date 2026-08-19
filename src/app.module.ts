@@ -9,6 +9,7 @@ import { UsersModule } from './users/users.module';
 import { MailModule } from './mail/mail.module';
 import { TicketModule } from './ticket/ticket.module';
 import { CinemaModule } from './cinema/cinema.module';
+import { HealthModule } from './health/health.module';
 
 @Module({
   imports: [
@@ -26,6 +27,7 @@ import { CinemaModule } from './cinema/cinema.module';
     MailModule,
     TicketModule,
     CinemaModule,
+    HealthModule,
   ],
   controllers: [],
   providers: [],
