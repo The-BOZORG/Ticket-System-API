@@ -13,9 +13,11 @@ import { TicketService } from './ticket.service';
 import { JwtAuthGuard } from 'src/auth/guards/jwt.guard';
 import { CreateDto } from './dto/create.dto';
 import { CurrentUser } from 'src/common/decorators/currentUser.decorator';
-import { UserEntity } from 'src/users/entities/user.entity';
+import { UserEntity, UserRole } from 'src/users/entities/user.entity';
 import { Paginate } from 'nestjs-paginate';
 import type { PaginateQuery } from 'nestjs-paginate';
+import { Roles } from 'src/common/decorators/role.decorator';
+import { RolesGuard } from 'src/common/guards/role.guard';
 
 @Controller('ticket')
 export class TicketController {
@@ -29,7 +31,8 @@ export class TicketController {
   }
 
   @Get('all')
-  @UseGuards(JwtAuthGuard)
+  @Roles(UserRole.ADMIN)
+  @UseGuards(JwtAuthGuard, RolesGuard)
   @HttpCode(HttpStatus.OK)
   public getAllTickets(@Paginate() query: PaginateQuery) {
     return this.ticketService.getAll(query);

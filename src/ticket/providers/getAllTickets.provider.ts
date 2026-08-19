@@ -17,14 +17,7 @@ export class GetAllTicketsPagination {
     query: PaginateQuery,
   ): Promise<Paginated<TicketEntity>> {
     return paginate(query, this.ticketRepository, {
-      select: [
-        'id',
-        'ticketNumber',
-        'title',
-        'status',
-        'priority',
-        'createdAt',
-      ],
+      select: ['id', 'ticketNumber', 'title', 'createdAt'],
       sortableColumns: ['id', 'createdAt'],
       searchableColumns: ['ticketNumber', 'title', 'description'],
       defaultSortBy: [['createdAt', 'DESC']],

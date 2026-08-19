@@ -20,6 +20,7 @@ import { Paginate } from 'nestjs-paginate';
 import type { PaginateQuery } from 'nestjs-paginate';
 import { Roles } from '../common/decorators/role.decorator';
 import { RolesGuard } from '../common/guards/role.guard';
+
 @Controller('user')
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}

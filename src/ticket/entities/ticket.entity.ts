@@ -21,7 +21,7 @@ export class TicketEntity {
   @Column()
   title: string;
 
-  @Column({ type: 'text' })
+  @Column({ type: 'text', nullable: true })
   description?: string;
 
   @ManyToOne(() => UserEntity, (user) => user.tickets, {

@@ -30,7 +30,8 @@ export class CreateTicketProvider {
 
       return await this.ticketRepository.save(ticket);
     } catch (error) {
-      throw new RequestTimeoutException('failed to create ticket', error);
+      console.error('CREATE TICKET ERROR:', error);
+      throw error;
     }
   }
 }
