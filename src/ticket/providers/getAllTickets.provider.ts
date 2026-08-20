@@ -1,6 +1,6 @@
 import { Paginated, PaginateQuery, paginate } from 'nestjs-paginate';
 
-import { Injectable } from '@nestjs/common';
+import { Injectable, RequestTimeoutException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
@@ -16,11 +16,15 @@ export class GetAllTicketsPagination {
   public async getAllTicketsPagination(
     query: PaginateQuery,
   ): Promise<Paginated<TicketEntity>> {
-    return paginate(query, this.ticketRepository, {
-      select: ['id', 'ticketNumber', 'title', 'createdAt'],
-      sortableColumns: ['id', 'createdAt'],
-      searchableColumns: ['ticketNumber', 'title', 'description'],
-      defaultSortBy: [['createdAt', 'DESC']],
-    });
+    try {
+      return paginate(query, this.ticketRepository, {
+        select: ['id', 'ticketNumber', 'title', 'createdAt'],
+        sortableColumns: ['id', 'createdAt'],
+        searchableColumns: ['ticketNumber', 'title', 'description'],
+        defaultSortBy: [['createdAt', 'DESC']],
+      });
+    } catch (error) {
+      throw new RequestTimeoutException('failed to find movie');
+    }
   }
 }

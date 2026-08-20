@@ -40,10 +40,6 @@ export class GetAllMoviesPagination {
         defaultSortBy: [['createdAt', 'DESC']],
       });
     } catch (error) {
-      if (error instanceof NotFoundException) {
-        throw error;
-      }
-
       throw new RequestTimeoutException('failed to find movie');
     }
   }
