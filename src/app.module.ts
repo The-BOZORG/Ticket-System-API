@@ -12,6 +12,7 @@ import { CinemaModule } from './cinema/cinema.module';
 import { HealthModule } from './health/health.module';
 import { MovieModule } from './movie/movie.module';
 import { ScreeningModule } from './screening/screening.module';
+import { ShowtimeModule } from './showtime/showtime.module';
 
 @Module({
   imports: [
@@ -32,6 +33,7 @@ import { ScreeningModule } from './screening/screening.module';
     HealthModule,
     MovieModule,
     ScreeningModule,
+    ShowtimeModule,
   ],
   controllers: [],
   providers: [],

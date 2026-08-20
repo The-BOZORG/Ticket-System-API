@@ -6,7 +6,7 @@ import {
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
-import { MovieEntity } from '../entities/movie.entites';
+import { MovieEntity } from '../entities/movie.entity';
 import { UpdateMovieDto } from '../dto/updateMovie.dto';
 
 @Injectable()

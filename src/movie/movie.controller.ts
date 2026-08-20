@@ -14,7 +14,7 @@ import {
 import { JwtAuthGuard } from 'src/auth/guards/jwt.guard';
 import { MovieService } from './movie.service';
 import { CreateMovieDto } from './dto/createMovie.dto';
-import { MovieEntity } from './entities/movie.entites';
+import { MovieEntity } from './entities/movie.entity';
 import { Paginate } from 'nestjs-paginate';
 import type { PaginateQuery } from 'nestjs-paginate';
 import { UpdateMovieDto } from './dto/updateMovie.dto';

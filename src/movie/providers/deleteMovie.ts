@@ -5,7 +5,7 @@ import {
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { MovieEntity } from '../entities/movie.entites';
+import { MovieEntity } from '../entities/movie.entity';
 
 @Injectable()
 export class DeleteMovieProvider {

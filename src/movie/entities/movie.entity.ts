@@ -2,10 +2,12 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
 import { MovieGenre } from '../enum/movei.enum';
+import { ShowtimeEntity } from '../../showtime/entities/showtime.entity';
 
 @Entity({ name: 'movies' })
 export class MovieEntity {
@@ -43,6 +45,9 @@ export class MovieEntity {
     nullable: false,
   })
   releaseDate: Date;
+
+  @OneToMany(() => ShowtimeEntity, (showtime) => showtime.movie)
+  showtimes: ShowtimeEntity[];
 
   @CreateDateColumn()
   createdAt: Date;

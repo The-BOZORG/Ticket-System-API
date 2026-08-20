@@ -6,7 +6,7 @@ import { GetAllMoviesPagination } from './providers/getAllMove.provider';
 import { UpdateMovieProvider } from './providers/updateMovie.provider';
 import { DeleteMovieProvider } from './providers/deleteMovie';
 import { CreateMovieDto } from './dto/createMovie.dto';
-import { MovieEntity } from './entities/movie.entites';
+import { MovieEntity } from './entities/movie.entity';
 import { UpdateMovieDto } from './dto/updateMovie.dto';
 
 @Injectable()

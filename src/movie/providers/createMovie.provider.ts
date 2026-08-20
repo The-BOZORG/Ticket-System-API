@@ -4,7 +4,7 @@ import {
   RequestTimeoutException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { MovieEntity } from '../entities/movie.entites';
+import { MovieEntity } from '../entities/movie.entity';
 import { CreateMovieDto } from '../dto/createMovie.dto';
 import { Repository } from 'typeorm';
 

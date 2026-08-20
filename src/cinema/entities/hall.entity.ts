@@ -7,6 +7,7 @@ import {
 } from 'typeorm';
 import { CinemaEntity } from './cinema.entity';
 import { SeatEntity } from './seat.entity';
+import { ShowtimeEntity } from '../../showtime/entities/showtime.entity';
 
 @Entity({ name: 'halls' })
 export class HallEntity {
@@ -27,4 +28,7 @@ export class HallEntity {
 
   @OneToMany(() => SeatEntity, (seat) => seat.hall)
   seats: SeatEntity[];
+
+  @OneToMany(() => ShowtimeEntity, (showtime) => showtime.hall)
+  showtimes: ShowtimeEntity[];
 }
