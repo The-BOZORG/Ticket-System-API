@@ -2,10 +2,12 @@ import {
   Column,
   Entity,
   ManyToOne,
+  OneToMany,
   PrimaryGeneratedColumn,
   Unique,
 } from 'typeorm';
 import { HallEntity } from './hall.entity';
+import { ReserveSeatEntity } from '../../reserve/entities/reserveSeat.entity';
 
 @Entity({ name: 'seats' })
 @Unique(['hall', 'row', 'number'])
@@ -31,4 +33,7 @@ export class SeatEntity {
     onDelete: 'CASCADE',
   })
   hall: HallEntity;
+
+  @OneToMany(() => ReserveSeatEntity, (reserveSeat) => reserveSeat.seat)
+  reserveSeats: ReserveSeatEntity[];
 }

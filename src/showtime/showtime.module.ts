@@ -7,9 +7,13 @@ import { UpdateShowtimeProvider } from './providers/updateShowtime.provider';
 import { DeleteShowtimeProvider } from './providers/deleteShowTime.provider';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ShowtimeEntity } from './entities/showtime.entity';
+import { MovieEntity } from 'src/movie/entities/movie.entity';
+import { HallEntity } from 'src/cinema/entities/hall.entity';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([ShowtimeEntity])],
+  imports: [
+    TypeOrmModule.forFeature([ShowtimeEntity, MovieEntity, HallEntity]),
+  ],
   controllers: [ShowtimeController],
   providers: [
     ShowtimeService,

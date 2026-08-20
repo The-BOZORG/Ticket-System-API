@@ -1,3 +1,4 @@
+import { ReserveEntity } from '../../reserve/entities/reserve.entity';
 import { HallEntity } from '../../cinema/entities/hall.entity';
 import { MovieEntity } from '../../movie/entities/movie.entity';
 import {
@@ -6,6 +7,7 @@ import {
   Entity,
   JoinColumn,
   ManyToOne,
+  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
@@ -34,6 +36,9 @@ export class ShowtimeEntity {
 
   @Column({ type: 'timestamp' })
   endTime: Date;
+
+  @OneToMany(() => ReserveEntity, (reserve) => reserve.showtime)
+  reserves: ReserveEntity[];
 
   @CreateDateColumn()
   createdAt: Date;

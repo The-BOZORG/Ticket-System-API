@@ -8,6 +8,7 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
+import { ReserveEntity } from '../../reserve/entities/reserve.entity';
 
 export enum UserRole {
   USER = 'USER',
@@ -54,6 +55,9 @@ export class UserEntity {
 
   @OneToMany(() => TicketEntity, (ticket) => ticket.user)
   tickets: TicketEntity[];
+
+  @OneToMany(() => ReserveEntity, (reserve) => reserve.user)
+  reserves: ReserveEntity[];
 
   @CreateDateColumn({
     name: 'created_at',
