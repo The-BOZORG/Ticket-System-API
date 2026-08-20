@@ -6,6 +6,10 @@ import { ReserveEntity } from './entities/reserve.entity';
 import { ReserveSeatEntity } from './entities/reserveSeat.entity';
 import { UserEntity } from 'src/users/entities/user.entity';
 import { SeatEntity } from 'src/cinema/entities/seat.entity';
+import { CreateReserveProvider } from './providers/createReserve.provider';
+import { FindReserveByIdProvider } from './providers/findReserveById.provider';
+import { DeleteReserveProvider } from './providers/deleteReserver.provider';
+import { ShowtimeEntity } from 'src/showtime/entities/showtime.entity';
 
 @Module({
   imports: [
@@ -14,9 +18,15 @@ import { SeatEntity } from 'src/cinema/entities/seat.entity';
       ReserveSeatEntity,
       UserEntity,
       SeatEntity,
+      ShowtimeEntity,
     ]),
   ],
   controllers: [ReserveController],
-  providers: [ReserveService],
+  providers: [
+    ReserveService,
+    CreateReserveProvider,
+    FindReserveByIdProvider,
+    DeleteReserveProvider,
+  ],
 })
 export class ReserveModule {}
