@@ -1,4 +1,8 @@
-import { Injectable, RequestTimeoutException } from '@nestjs/common';
+import {
+  Injectable,
+  NotFoundException,
+  RequestTimeoutException,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { TicketEntity } from '../entities/ticket.entity';
 import { Repository } from 'typeorm';
@@ -30,8 +34,11 @@ export class CreateTicketProvider {
 
       return await this.ticketRepository.save(ticket);
     } catch (error) {
-      console.error('CREATE TICKET ERROR:', error);
-      throw error;
+      if (error instanceof NotFoundException) {
+        throw error;
+      }
+
+      throw new RequestTimeoutException('database request failed');
     }
   }
 }

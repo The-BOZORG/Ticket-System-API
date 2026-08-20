@@ -1,5 +1,6 @@
 import {
   IsDateString,
+  IsEnum,
   IsInt,
   IsNotEmpty,
   IsOptional,
@@ -8,6 +9,7 @@ import {
   MaxLength,
   Min,
 } from 'class-validator';
+import { MovieGenre } from '../enum/movei.enum';
 
 export class CreateMovieDto {
   @IsString()
@@ -28,10 +30,8 @@ export class CreateMovieDto {
   @MaxLength(500)
   poster?: string;
 
-  @IsString()
-  @IsNotEmpty()
-  @MaxLength(50)
-  genre: string;
+  @IsEnum(MovieGenre)
+  genre: MovieGenre;
 
   @IsString()
   @IsNotEmpty()

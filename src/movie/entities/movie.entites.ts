@@ -5,14 +5,7 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
-
-enum MovieGenre {
-  ACTION = 'ACTION',
-  COMEDY = 'COMEDY',
-  DRAMA = 'DRAMA',
-  HORROR = 'HORROR',
-  SCI_FI = 'SCI_FI',
-}
+import { MovieGenre } from '../enum/movei.enum';
 
 @Entity({ name: 'movies' })
 export class MovieEntity {
