@@ -18,9 +18,7 @@ export class DeleteMovieProvider {
     try {
       const result = await this.movieRepository.delete(id);
 
-      if (result.affected === 0) {
-        throw new NotFoundException('Movie not found');
-      }
+      if (result.affected === 0) throw new NotFoundException('Movie not found');
     } catch (error) {
       if (error instanceof NotFoundException) {
         throw error;

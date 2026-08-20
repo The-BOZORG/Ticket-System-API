@@ -19,9 +19,7 @@ export class FindMovieByIdProvider {
     try {
       const movie = await this.movieRepository.findOneBy({ id });
 
-      if (!movie) {
-        throw new NotFoundException('movie not found');
-      }
+      if (!movie) throw new NotFoundException('movie not found');
 
       return movie;
     } catch (error) {
