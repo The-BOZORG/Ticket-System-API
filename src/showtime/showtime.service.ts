@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { CreateShowtimeDto } from './dto/create-showtime.dto';
+import { CreateShowtimeDto } from './dto/createShowtime.dto';
 import { UpdateShowtimeDto } from './dto/update-showtime.dto';
 
 @Injectable()

@@ -1,6 +1,14 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+} from '@nestjs/common';
 import { ShowtimeService } from './showtime.service';
-import { CreateShowtimeDto } from './dto/create-showtime.dto';
+import { CreateShowtimeDto } from './dto/createShowtime.dto';
 import { UpdateShowtimeDto } from './dto/update-showtime.dto';
 
 @Controller('showtime')
@@ -23,7 +31,10 @@ export class ShowtimeController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateShowtimeDto: UpdateShowtimeDto) {
+  update(
+    @Param('id') id: string,
+    @Body() updateShowtimeDto: UpdateShowtimeDto,
+  ) {
     return this.showtimeService.update(+id, updateShowtimeDto);
   }
 
