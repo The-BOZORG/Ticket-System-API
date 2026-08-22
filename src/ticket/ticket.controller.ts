@@ -18,9 +18,16 @@ import { Paginate } from 'nestjs-paginate';
 import type { PaginateQuery } from 'nestjs-paginate';
 import { Roles } from 'src/common/decorators/role.decorator';
 import { RolesGuard } from 'src/common/guards/role.guard';
+import { Throttle } from '@nestjs/throttler';
 
 @Controller('ticket')
 @UseGuards(JwtAuthGuard)
+@Throttle({
+  default: {
+    limit: 30,
+    ttl: 60000,
+  },
+})
 export class TicketController {
   constructor(private readonly ticketService: TicketService) {}
 

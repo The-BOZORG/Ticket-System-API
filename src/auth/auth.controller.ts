@@ -16,12 +16,19 @@ import { LocalAuthGuard } from './guards/local.guard';
 import { JwtRefreshGuard } from './guards/refresh.guard';
 import { CurrentUser } from '../common/decorators/currentUser.decorator';
 import { UserEntity } from 'src/users/entities/user.entity';
+import { Throttle } from '@nestjs/throttler';
 
 @Controller('auth')
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
   @Post('register')
+  @Throttle({
+    default: {
+      limit: 5,
+      ttl: 60000,
+    },
+  })
   @HttpCode(HttpStatus.CREATED)
   public async register(@Body() dto: RegisterDto) {
     return this.authService.register(dto);
@@ -38,6 +45,12 @@ export class AuthController {
   }
 
   @Post('login')
+  @Throttle({
+    default: {
+      limit: 5,
+      ttl: 60000,
+    },
+  })
   @UseGuards(LocalAuthGuard)
   @HttpCode(HttpStatus.OK)
   public async login(

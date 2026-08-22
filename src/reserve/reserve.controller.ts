@@ -16,6 +16,7 @@ import { ReserveService } from './reserve.service';
 import { CreateReserveDto } from './dto/createReserve.dto';
 import { ReserveEntity } from './entities/reserve.entity';
 import { JwtAuthGuard } from 'src/auth/guards/jwt.guard';
+import { Throttle } from '@nestjs/throttler';
 
 interface AuthenticatedRequest extends Request {
   user: {
@@ -25,6 +26,12 @@ interface AuthenticatedRequest extends Request {
 
 @Controller('reserves')
 @UseGuards(JwtAuthGuard)
+@Throttle({
+  default: {
+    limit: 30,
+    ttl: 60000,
+  },
+})
 export class ReserveController {
   constructor(private readonly reserveService: ReserveService) {}
 

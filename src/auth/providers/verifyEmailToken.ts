@@ -2,7 +2,7 @@ import { Inject, Injectable, UnauthorizedException } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
 import { InjectRepository } from '@nestjs/typeorm';
-import type { RedisClientType } from 'redis';
+import Redis from 'ioredis';
 import { UserEntity } from 'src/users/entities/user.entity';
 import { Repository } from 'typeorm';
 
@@ -16,7 +16,7 @@ export class VerifyEmailProvider {
     private readonly userRepository: Repository<UserEntity>,
 
     @Inject('REDIS_CLIENT')
-    private readonly redisClient: RedisClientType,
+    private readonly redisClient: Redis,
   ) {}
 
   public async verify(token: string): Promise<void> {

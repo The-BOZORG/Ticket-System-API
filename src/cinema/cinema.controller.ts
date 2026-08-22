@@ -15,9 +15,16 @@ import { CinemaEntity } from './entities/cinema.entity';
 import { UpdateCinemaDto } from './dto/updateCinema';
 import { JwtAuthGuard } from 'src/auth/guards/jwt.guard';
 import { CreateCinemaDto } from './dto/createCinema.dto';
+import { Throttle } from '@nestjs/throttler';
 
 @Controller('cinema')
 @UseGuards(JwtAuthGuard)
+@Throttle({
+  default: {
+    limit: 30,
+    ttl: 60000,
+  },
+})
 export class CinemaController {
   constructor(private readonly cinemaService: CinemaService) {}
 

@@ -18,9 +18,16 @@ import { MovieEntity } from './entities/movie.entity';
 import { Paginate } from 'nestjs-paginate';
 import type { PaginateQuery } from 'nestjs-paginate';
 import { UpdateMovieDto } from './dto/updateMovie.dto';
+import { Throttle } from '@nestjs/throttler';
 
 @Controller('movies')
 @UseGuards(JwtAuthGuard)
+@Throttle({
+  default: {
+    limit: 30,
+    ttl: 60000,
+  },
+})
 export class MovieController {
   constructor(private readonly movieService: MovieService) {}
 

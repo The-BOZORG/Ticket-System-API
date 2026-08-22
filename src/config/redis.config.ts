@@ -1,29 +1,22 @@
-import { createClient } from 'redis';
+import Redis from 'ioredis';
 
 export const redisConfig = {
   provide: 'REDIS_CLIENT',
 
-  useFactory: async () => {
-    const host = process.env.REDIS_HOST;
-    const port = process.env.REDIS_PORT;
-    const password = process.env.REDIS_PASSWORD;
-
-    const client = createClient({
-      socket: {
-        host,
-        port: Number(port),
-      },
-      password: password || undefined,
+  useFactory: () => {
+    const redis = new Redis({
+      host: process.env.REDIS_HOST,
+      port: Number(process.env.REDIS_PORT),
     });
 
-    client.on('error', (error) => {
+    redis.on('connect', () => {
+      console.log('redis connected successfully');
+    });
+
+    redis.on('error', (error) => {
       console.error('redis Error:', error);
     });
 
-    await client.connect();
-
-    console.log('redis connected successfully');
-
-    return client;
+    return redis;
   },
 };

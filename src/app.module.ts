@@ -14,9 +14,10 @@ import { MovieModule } from './movie/movie.module';
 import { ShowtimeModule } from './showtime/showtime.module';
 import { ReserveModule } from './reserve/reserve.module';
 import { RedisModule } from './redis/redis.module';
-import { RateLimiterModule } from './rate-limiter/rate-limiter.module';
 import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
 import { APP_GUARD } from '@nestjs/core';
+import { ThrottlerStorageRedisService } from '@nest-lab/throttler-storage-redis';
+import { RateLimiterModule } from './rate-limiter/rate-limiter.module';
 
 @Module({
   imports: [
@@ -29,13 +30,19 @@ import { APP_GUARD } from '@nestjs/core';
       inject: [ConfigService],
       useFactory: typeOrmConfig,
     }),
-    ThrottlerModule.forRoot({
-      throttlers: [
-        {
-          ttl: 60000,
-          limit: 10,
-        },
-      ],
+    ThrottlerModule.forRootAsync({
+      imports: [RedisModule],
+      inject: ['REDIS_CLIENT'],
+      useFactory: (redisClient) => ({
+        throttlers: [
+          {
+            name: 'default',
+            ttl: 60000,
+            limit: 100,
+          },
+        ],
+        storage: new ThrottlerStorageRedisService(redisClient),
+      }),
     }),
     AuthModule,
     UsersModule,

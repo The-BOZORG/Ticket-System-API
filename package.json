@@ -24,6 +24,7 @@
     "migration:show": "typeorm-ts-node-commonjs migration:show -d src/database/data-source.ts"
   },
   "dependencies": {
+    "@nest-lab/throttler-storage-redis": "^1.2.0",
     "@nestjs-modules/mailer": "^2.3.7",
     "@nestjs/common": "^11.0.1",
     "@nestjs/config": "^4.0.4",
@@ -41,6 +42,7 @@
     "cookie-parser": "^1.4.7",
     "dotenv": "^17.4.2",
     "ejs": "^6.0.1",
+    "ioredis": "^5.6.1",
     "joi": "^18.2.3",
     "nanoid": "^6.0.1",
     "nestjs-paginate": "^15.0.1",

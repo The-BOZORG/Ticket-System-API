@@ -15,9 +15,16 @@ import { CreateHallDto } from './dto/createHall.dto';
 import { HallEntity } from './entities/hall.entity';
 import { UpdateHallDto } from './dto/updateHall.dto';
 import { JwtAuthGuard } from 'src/auth/guards/jwt.guard';
+import { Throttle } from '@nestjs/throttler';
 
 @Controller('hall')
 @UseGuards(JwtAuthGuard)
+@Throttle({
+  default: {
+    limit: 30,
+    ttl: 60000,
+  },
+})
 export class HallController {
   constructor(private readonly hallService: HallService) {}
 

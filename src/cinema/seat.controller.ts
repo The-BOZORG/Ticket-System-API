@@ -12,9 +12,16 @@ import { SeatService } from './seat.service';
 import { CreateSeatDto } from './dto/createSeat.dto';
 import { SeatEntity } from './entities/seat.entity';
 import { JwtAuthGuard } from 'src/auth/guards/jwt.guard';
+import { Throttle } from '@nestjs/throttler';
 
 @Controller('seat')
 @UseGuards(JwtAuthGuard)
+@Throttle({
+  default: {
+    limit: 30,
+    ttl: 60000,
+  },
+})
 export class SeatController {
   constructor(private readonly seatService: SeatService) {}
 
