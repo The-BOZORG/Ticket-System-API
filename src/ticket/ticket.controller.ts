@@ -9,6 +9,12 @@ import {
   Post,
   UseGuards,
 } from '@nestjs/common';
+import {
+  ApiTags,
+  ApiOperation,
+  ApiBearerAuth,
+  ApiParam,
+} from '@nestjs/swagger';
 import { TicketService } from './ticket.service';
 import { JwtAuthGuard } from 'src/auth/guards/jwt.guard';
 import { CreateDto } from './dto/create.dto';
@@ -20,6 +26,8 @@ import { Roles } from 'src/common/decorators/role.decorator';
 import { RolesGuard } from 'src/common/guards/role.guard';
 import { Throttle } from '@nestjs/throttler';
 
+@ApiTags('Tickets')
+@ApiBearerAuth('access-token')
 @Controller('ticket')
 @UseGuards(JwtAuthGuard)
 @Throttle({
@@ -33,6 +41,7 @@ export class TicketController {
 
   @Post('create')
   @HttpCode(HttpStatus.CREATED)
+  @ApiOperation({ summary: 'Create a support ticket' })
   public createTicket(@Body() dto: CreateDto, @CurrentUser() user: UserEntity) {
     return this.ticketService.create(dto, user.id);
   }
@@ -41,12 +50,18 @@ export class TicketController {
   @Roles(UserRole.ADMIN)
   @UseGuards(JwtAuthGuard, RolesGuard)
   @HttpCode(HttpStatus.OK)
+  @ApiOperation({
+    summary: 'Get all tickets (Admin only)',
+    description: 'Returns paginated tickets. Admin role required.',
+  })
   public getAllTickets(@Paginate() query: PaginateQuery) {
     return this.ticketService.getAll(query);
   }
 
   @Get(':id')
   @HttpCode(HttpStatus.OK)
+  @ApiOperation({ summary: 'Get own ticket by ID' })
+  @ApiParam({ name: 'id', description: 'Ticket ID', example: 1 })
   public async myTicket(
     @Param('id') ticketId: number,
     @CurrentUser() user: UserEntity,
@@ -56,6 +71,8 @@ export class TicketController {
 
   @Delete(':id')
   @HttpCode(HttpStatus.OK)
+  @ApiOperation({ summary: 'Delete own ticket' })
+  @ApiParam({ name: 'id', description: 'Ticket ID', example: 1 })
   public async deleteTicket(
     @Param('id') ticketId: number,
     @CurrentUser() user: UserEntity,

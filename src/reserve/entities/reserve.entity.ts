@@ -1,3 +1,4 @@
+import { ApiProperty } from '@nestjs/swagger';
 import {
   Column,
   CreateDateColumn,
@@ -16,9 +17,14 @@ import { ReserveStatus } from '../enum/reserve.enum';
 
 @Entity('reserves')
 export class ReserveEntity {
+  @ApiProperty({ example: 1, description: 'Reservation ID' })
   @PrimaryGeneratedColumn()
   id: number;
 
+  @ApiProperty({
+    type: () => UserEntity,
+    description: 'User who made the reservation',
+  })
   @ManyToOne(() => UserEntity, (user) => user.reserves, {
     nullable: false,
     onDelete: 'CASCADE',
@@ -26,6 +32,10 @@ export class ReserveEntity {
   @JoinColumn({ name: 'user_id' })
   user: UserEntity;
 
+  @ApiProperty({
+    type: () => ShowtimeEntity,
+    description: 'Showtime for the reservation',
+  })
   @ManyToOne(() => ShowtimeEntity, (showtime) => showtime.reserves, {
     nullable: false,
     onDelete: 'CASCADE',
@@ -33,11 +43,16 @@ export class ReserveEntity {
   @JoinColumn({ name: 'showtime_id' })
   showtime: ShowtimeEntity;
 
+  @ApiProperty({
+    type: () => [ReserveSeatEntity],
+    description: 'Reserved seats',
+  })
   @OneToMany(() => ReserveSeatEntity, (reserveSeat) => reserveSeat.reserve, {
     cascade: true,
   })
   reserveSeats: ReserveSeatEntity[];
 
+  @ApiProperty({ example: 25.0, description: 'Total price in dollars' })
   @Column({
     type: 'decimal',
     precision: 10,
@@ -45,6 +60,11 @@ export class ReserveEntity {
   })
   totalPrice: number;
 
+  @ApiProperty({
+    enum: ReserveStatus,
+    example: ReserveStatus.PENDING,
+    description: 'Reservation status',
+  })
   @Column({
     type: 'enum',
     enum: ReserveStatus,
@@ -52,9 +72,11 @@ export class ReserveEntity {
   })
   status: ReserveStatus;
 
+  @ApiProperty({ example: '2026-01-01T00:00:00.000Z' })
   @CreateDateColumn()
   createdAt: Date;
 
+  @ApiProperty({ example: '2026-01-01T00:00:00.000Z' })
   @UpdateDateColumn()
   updatedAt: Date;
 }

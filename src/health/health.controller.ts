@@ -1,4 +1,5 @@
 import { Controller, Get } from '@nestjs/common';
+import { ApiTags, ApiOperation } from '@nestjs/swagger';
 import {
   HealthCheck,
   HealthCheckService,
@@ -6,6 +7,7 @@ import {
 } from '@nestjs/terminus';
 import { RedisHealthIndicator } from './provider/redis-health.provider';
 
+@ApiTags('Health')
 @Controller('health')
 export class HealthController {
   constructor(
@@ -14,8 +16,12 @@ export class HealthController {
     private readonly redis: RedisHealthIndicator,
   ) {}
 
-  @Get() // GET /health
+  @Get()
   @HealthCheck()
+  @ApiOperation({
+    summary: 'Check API health',
+    description: 'Verifies database and Redis connectivity.',
+  })
   public check() {
     return this.health.check([
       () => this.db.pingCheck('database'),

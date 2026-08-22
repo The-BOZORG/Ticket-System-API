@@ -9,6 +9,12 @@ import {
   Query,
   UseGuards,
 } from '@nestjs/common';
+import {
+  ApiTags,
+  ApiOperation,
+  ApiBearerAuth,
+  ApiQuery,
+} from '@nestjs/swagger';
 import { UsersService } from './users.service';
 import { JwtAuthGuard } from 'src/auth/guards/jwt.guard';
 import { CurrentUser } from 'src/common/decorators/currentUser.decorator';
@@ -21,6 +27,8 @@ import type { PaginateQuery } from 'nestjs-paginate';
 import { Roles } from '../common/decorators/role.decorator';
 import { RolesGuard } from '../common/guards/role.guard';
 
+@ApiTags('Users')
+@ApiBearerAuth('access-token')
 @Controller('user')
 @UseGuards(JwtAuthGuard)
 export class UsersController {
@@ -28,26 +36,42 @@ export class UsersController {
 
   @Get('me')
   @HttpCode(HttpStatus.OK)
+  @ApiOperation({ summary: 'Get current user profile' })
   public showMe(@CurrentUser() user: UserEntity) {
     return this.usersService.me(user.id);
   }
 
-  @Get('users') // http://localhost:3000/user/users?limit=2&offset=1
+  @Get('users')
   @Roles(UserRole.ADMIN)
   @UseGuards(JwtAuthGuard, RolesGuard)
   @HttpCode(HttpStatus.OK)
+  @ApiOperation({
+    summary: 'Get all users (Admin only)',
+    description: 'Returns paginated list of users. Admin role required.',
+  })
+  @ApiQuery({
+    name: 'limit',
+    required: false,
+    type: Number,
+    description: 'Results per page',
+  })
   public getUsers(@Query() dto: PaginationDto) {
     return this.usersService.getUser(dto);
   }
 
   @Get('pagination')
   @HttpCode(HttpStatus.OK)
+  @ApiOperation({
+    summary: 'Get users with nestjs-paginate',
+    description: 'Returns paginated users using nestjs-paginate query params.',
+  })
   public pagination(@Paginate() query: PaginateQuery) {
     return this.usersService.pagination(query);
   }
 
-  @Patch('update') // http://localhost:3000/user/update
+  @Patch('update')
   @HttpCode(HttpStatus.OK)
+  @ApiOperation({ summary: 'Update current user profile' })
   public update(@Body() dto: UpdateDto, @CurrentUser() user: UserEntity) {
     this.usersService.update(dto, user.id);
 
@@ -58,6 +82,7 @@ export class UsersController {
 
   @Patch('updatePass')
   @HttpCode(HttpStatus.OK)
+  @ApiOperation({ summary: 'Change password' })
   public updatePass(
     @Body() dto: ChangePasswordDto,
     @CurrentUser() user: UserEntity,
@@ -71,6 +96,7 @@ export class UsersController {
 
   @Delete('delete')
   @HttpCode(HttpStatus.OK)
+  @ApiOperation({ summary: 'Delete current user account' })
   public delete(@CurrentUser() user: UserEntity) {
     this.usersService.delete(user.id);
 
