@@ -5,6 +5,7 @@ import { ReserveEntity } from './entities/reserve.entity';
 import { CreateReserveProvider } from './providers/createReserve.provider';
 import { FindReserveByIdProvider } from './providers/findReserveById.provider';
 import { DeleteReserveProvider } from './providers/deleteReserver.provider';
+import { SeatLockProvider } from './providers/seatLock.provider';
 
 @Injectable()
 export class ReserveService {
@@ -14,6 +15,8 @@ export class ReserveService {
     private readonly findReserveByIdProvider: FindReserveByIdProvider,
 
     private readonly deleteReserveProvider: DeleteReserveProvider,
+
+    private readonly seatLockProvider: SeatLockProvider,
   ) {}
 
   public async create(
@@ -29,5 +32,11 @@ export class ReserveService {
 
   public async delete(id: number): Promise<void> {
     return this.deleteReserveProvider.delete(id);
+  }
+
+  public async lockSeats(showtimeId: number, seatIds: number[]): Promise<void> {
+    await Promise.all(
+      seatIds.map((seatId) => this.seatLockProvider.lock(showtimeId, seatId)),
+    );
   }
 }

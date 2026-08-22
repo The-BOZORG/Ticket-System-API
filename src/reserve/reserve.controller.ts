@@ -55,4 +55,10 @@ export class ReserveController {
   public async delete(@Param('id') id: number): Promise<void> {
     return this.reserveService.delete(id);
   }
+
+  @Post('lock-seat')
+  @HttpCode(HttpStatus.OK)
+  public async lockSeats(@Body() dto: CreateReserveDto): Promise<void> {
+    return this.reserveService.lockSeats(dto.showtimeId, dto.seatIds);
+  }
 }
