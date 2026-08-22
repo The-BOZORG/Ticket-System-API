@@ -13,6 +13,12 @@ A robust NestJS-based cinema ticket reservation system with seat locking, JWT au
 - **Validation**: class-validator + class-transformer
 - **Rate Limiting**: @nestjs/throttler with Redis storage
 
+The API will be available at:
+
+- **API**: http://localhost:3000
+- **Swagger Docs**: http://localhost:3000/api
+- **Health Check**: http://localhost:3000/health
+
 ---
 
 ## Entity Relationship Diagram
@@ -180,13 +186,6 @@ sequenceDiagram
 
 ---
 
-## Prerequisites
-
-- **Node.js** 22+
-- **Docker** & **Docker Compose**
-- **PostgreSQL** 17 (via Docker)
-- **Redis** 7 (via Docker)
-
 > **⚠️ IMPORTANT**: Redis **must** be running before starting the application. The API uses Redis for:
 >
 > - Refresh token storage (httpOnly cookies)
@@ -221,35 +220,6 @@ npm run migration:run
 # 7. Start development server
 npm run start:dev
 ```
-
-The API will be available at:
-
-- **API**: http://localhost:3000
-- **Swagger Docs**: http://localhost:3000/api
-- **Health Check**: http://localhost:3000/health
-
----
-
-## Environment Variables
-
-| Variable                       | Description               | Default                    |
-| ------------------------------ | ------------------------- | -------------------------- |
-| `PORT`                         | API port                  | `3000`                     |
-| `DATABASE_HOST`                | Postgres host             | `localhost`                |
-| `DATABASE_PORT`                | Postgres port             | `5432`                     |
-| `DATABASE_USER`                | Postgres user             | `postgres`                 |
-| `DATABASE_PASSWORD`            | Postgres password         | —                          |
-| `DATABASE_NAME`                | Database name             | `ticket`                   |
-| `JWT_ACCESS_TOKEN`             | Access token secret       | —                          |
-| `JWT_REFRESH_TOKEN`            | Refresh token secret      | —                          |
-| `JWT_ACCESS_TOKEN_TTL`         | Access token TTL          | `30m`                      |
-| `JWT_REFRESH_TOKEN_TTL`        | Refresh token TTL         | `7d`                       |
-| `JWT_EMAIL_VERIFICATION_TOKEN` | Email verification secret | —                          |
-| `MAIL_HOST`                    | SMTP host                 | `sandbox.smtp.mailtrap.io` |
-| `SMTP_USERNAME`                | SMTP username             | —                          |
-| `SMTP_PASSWORD`                | SMTP password             | —                          |
-| `REDIS_HOST`                   | Redis host                | `localhost`                |
-| `REDIS_PORT`                   | Redis port                | `6379`                     |
 
 ---
 
