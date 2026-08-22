@@ -10,6 +10,7 @@ import { CreateReserveProvider } from './providers/createReserve.provider';
 import { FindReserveByIdProvider } from './providers/findReserveById.provider';
 import { DeleteReserveProvider } from './providers/deleteReserver.provider';
 import { ShowtimeEntity } from 'src/showtime/entities/showtime.entity';
+import { SeatLockProvider } from './providers/seatLock.provider';
 
 @Module({
   imports: [
@@ -27,6 +28,7 @@ import { ShowtimeEntity } from 'src/showtime/entities/showtime.entity';
     CreateReserveProvider,
     FindReserveByIdProvider,
     DeleteReserveProvider,
+    SeatLockProvider,
   ],
 })
 export class ReserveModule {}

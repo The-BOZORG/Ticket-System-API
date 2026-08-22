@@ -13,11 +13,10 @@ import { HealthModule } from './health/health.module';
 import { MovieModule } from './movie/movie.module';
 import { ShowtimeModule } from './showtime/showtime.module';
 import { ReserveModule } from './reserve/reserve.module';
-import { RedisModule } from './redis/redis.module';
 import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
 import { APP_GUARD } from '@nestjs/core';
 import { ThrottlerStorageRedisService } from '@nest-lab/throttler-storage-redis';
-import { RateLimiterModule } from './rate-limiter/rate-limiter.module';
+import { RedisModule } from './redis/redis.module';
 
 @Module({
   imports: [
@@ -38,7 +37,7 @@ import { RateLimiterModule } from './rate-limiter/rate-limiter.module';
           {
             name: 'default',
             ttl: 60000,
-            limit: 100,
+            limit: 30,
           },
         ],
         storage: new ThrottlerStorageRedisService(redisClient),
@@ -54,7 +53,6 @@ import { RateLimiterModule } from './rate-limiter/rate-limiter.module';
     ShowtimeModule,
     ReserveModule,
     RedisModule,
-    RateLimiterModule,
   ],
   providers: [
     {
