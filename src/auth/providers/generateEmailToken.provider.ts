@@ -1,6 +1,8 @@
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
+import type { RedisClientType } from 'redis';
+import { randomUUID } from 'crypto';
 import { UserEntity } from 'src/users/entities/user.entity';
 
 @Injectable()
@@ -8,18 +10,30 @@ export class GenerateEmailToken {
   constructor(
     private readonly jwtService: JwtService,
     private readonly configService: ConfigService,
+
+    @Inject('REDIS_CLIENT')
+    private readonly redisClient: RedisClientType,
   ) {}
 
   public async generate(user: UserEntity): Promise<string> {
-    return await this.jwtService.signAsync(
+    const jti = randomUUID();
+
+    const token = await this.jwtService.signAsync(
       {
         id: user.id,
         purpose: 'email-verification',
+        jti,
       },
       {
         secret: this.configService.getOrThrow('JWT_EMAIL_VERIFICATION_TOKEN'),
         expiresIn: '15m',
       },
     );
+
+    await this.redisClient.set(`email-verification:${jti}`, user.id, {
+      EX: 900,
+    });
+
+    return token;
   }
 }

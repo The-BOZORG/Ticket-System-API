@@ -1,7 +1,8 @@
-import { Injectable, UnauthorizedException } from '@nestjs/common';
+import { Inject, Injectable, UnauthorizedException } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
 import { InjectRepository } from '@nestjs/typeorm';
+import type { RedisClientType } from 'redis';
 import { UserEntity } from 'src/users/entities/user.entity';
 import { Repository } from 'typeorm';
 
@@ -13,12 +14,16 @@ export class VerifyEmailProvider {
 
     @InjectRepository(UserEntity)
     private readonly userRepository: Repository<UserEntity>,
+
+    @Inject('REDIS_CLIENT')
+    private readonly redisClient: RedisClientType,
   ) {}
 
   public async verify(token: string): Promise<void> {
     let payload: {
       id: string;
       purpose: string;
+      jti: string;
     };
 
     try {
@@ -29,9 +34,18 @@ export class VerifyEmailProvider {
       throw new UnauthorizedException('invalid or expired verification token');
     }
 
-    if (payload.purpose !== 'email-verification') {
+    if (payload.purpose !== 'email-verification')
       throw new UnauthorizedException('invalid verification token');
-    }
+
+    const userId = await this.redisClient.get(
+      `email-verification:${payload.jti}`,
+    );
+
+    if (!userId)
+      throw new UnauthorizedException('invalid or expired verification token');
+
+    if (userId !== payload.id)
+      throw new UnauthorizedException('invalid verification token');
 
     const user = await this.userRepository.findOne({
       where: {
@@ -39,16 +53,18 @@ export class VerifyEmailProvider {
       },
     });
 
-    if (!user) {
-      throw new UnauthorizedException('user not found');
-    }
+    if (!user) throw new UnauthorizedException('user not found');
 
     if (user.isVerified) {
+      await this.redisClient.del(`email-verification:${payload.jti}`);
+
       return;
     }
 
     user.isVerified = true;
 
     await this.userRepository.save(user);
+
+    await this.redisClient.del(`email-verification:${payload.jti}`);
   }
 }

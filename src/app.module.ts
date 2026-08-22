@@ -13,7 +13,10 @@ import { HealthModule } from './health/health.module';
 import { MovieModule } from './movie/movie.module';
 import { ShowtimeModule } from './showtime/showtime.module';
 import { ReserveModule } from './reserve/reserve.module';
-import { redisConfig } from './config/redis.config';
+import { RedisModule } from './redis/redis.module';
+import { RateLimiterModule } from './rate-limiter/rate-limiter.module';
+import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
+import { APP_GUARD } from '@nestjs/core';
 
 @Module({
   imports: [
@@ -26,6 +29,14 @@ import { redisConfig } from './config/redis.config';
       inject: [ConfigService],
       useFactory: typeOrmConfig,
     }),
+    ThrottlerModule.forRoot({
+      throttlers: [
+        {
+          ttl: 60000,
+          limit: 10,
+        },
+      ],
+    }),
     AuthModule,
     UsersModule,
     MailModule,
@@ -35,8 +46,15 @@ import { redisConfig } from './config/redis.config';
     MovieModule,
     ShowtimeModule,
     ReserveModule,
+    RedisModule,
+    RateLimiterModule,
   ],
-  providers: [redisConfig],
-  exports: [redisConfig],
+  providers: [
+    {
+      provide: APP_GUARD,
+      useClass: ThrottlerGuard,
+    },
+  ],
+  exports: [],
 })
 export class AppModule {}

@@ -27,9 +27,7 @@ export class ValidateRefreshJwtProvider {
       throw new RequestTimeoutException('Database request failed.');
     }
 
-    if (!user) {
-      throw new UnauthorizedException('Invalid refresh token.');
-    }
+    if (!user) throw new UnauthorizedException('Invalid refresh token.');
 
     return user;
   }
