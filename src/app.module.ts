@@ -13,6 +13,7 @@ import { HealthModule } from './health/health.module';
 import { MovieModule } from './movie/movie.module';
 import { ShowtimeModule } from './showtime/showtime.module';
 import { ReserveModule } from './reserve/reserve.module';
+import { redisConfig } from './config/redis.config';
 
 @Module({
   imports: [
@@ -35,7 +36,7 @@ import { ReserveModule } from './reserve/reserve.module';
     ShowtimeModule,
     ReserveModule,
   ],
-  controllers: [],
-  providers: [],
+  providers: [redisConfig],
+  exports: [redisConfig],
 })
 export class AppModule {}
